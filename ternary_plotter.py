@@ -87,8 +87,8 @@ which = int(raw_input(">").strip()) - 1
 current_image = Image.open("images/" + charts[which][1])
 current_image = current_image.convert("RGB")
 
-print("Reading .csv file...")
-with open("points.csv", "r") as f:
+print("Reading .txt file...")
+with open("points.txt", "r") as f:
     for line in f:
         if line.strip() == "" or line.strip()[0] == "#":
             continue
