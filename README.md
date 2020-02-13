@@ -1,10 +1,15 @@
 # ternary_plotter
 
-Modify points.txt with the points you want to plot. Put each point on a different line.
+To run, just open the html file in a browser.
 
-The format is:
-TOP value, LEFT value, RIGHT value, COLOR, TEXT LABEL
+This program uses the following math to make sure the values sum to 1 and then to plot the ternary points on the chosen chart:
 
-Once you have modified and saved points.txt, run ternary_plotter.exe or ternary_plotter.py (if you have python installed).
+g = (a + b + c) / 1.0;
+a = a * g;
+b = b * g;
+c = c * g;
 
-Selected the chart you want to plot your points on, and an image of the plot will be displayed and also saved to disk with a timestamp.
+x = (2.0 * c + a) / (a + b + c) / 2.0;
+y = a / (a + b + c);
+
+The x and y values are then scaled and translated to fit into the chart that is in the chosen image.
