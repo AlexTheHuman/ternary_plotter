@@ -4,13 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-<title>Ternary Plotter</title>
-<h1>Ternary Plotter</h1>
-<br>
 <script>
-
 var charts = [["Blank", "images/blank.png", [428, 62, "Top"], [64, 691, "Left"], [793, 691, "Right"]],
           ["Soil", "images/soil.png", [320, 34, "Clay"], [33, 531, "Sand"], [607, 531, "Silt"]],
           ["Igneous Rock", "images/igneous.jpg", [300, 27, "Q"], [30, 494, "A"], [570, 494, "P"]],
@@ -24,7 +18,6 @@ function drawChart() {
   var ctx = c.getContext("2d");
   var img = document.createElement("img");
   img.src = charts[document.getElementById("charts").value][1];
-
   img.addEventListener("load", () => {
     c.width = img.width;
     c.height = img.height;
@@ -37,32 +30,28 @@ function drawDot() {
   var b = parseFloat(document.getElementById("b").value);
   var c = parseFloat(document.getElementById("c").value);
   var color = document.getElementById("color").value;
-  
   if (a + b + c == 0) {
     window.alert("Your three values sum to zero, please correct your values and try again.");
     return;
   }
-  
   var top = [charts[document.getElementById("charts").value][2][0], charts[document.getElementById("charts").value][2][1]];
   var left = [charts[document.getElementById("charts").value][3][0], charts[document.getElementById("charts").value][3][1]];
   var right = [charts[document.getElementById("charts").value][4][0], charts[document.getElementById("charts").value][4][1]];
-
   var g = (a + b + c) / 1.0;
   a = a * g;
   b = b * g;
   c = c * g;
-
-  
-
   x = (2.0 * c + a) / (a + b + c) / 2.0;
   y = a / (a + b + c);
-
   x = (x * (right[0] - left[0])) + left[0];
   y = (-y * (left[1] - top[1])) + left[1];
-  
   var c = document.getElementById("myCanvas");
   var ctx = c.getContext("2d");
   var img = document.getElementById("chart");
+  ctx.beginPath();
+  ctx.arc(x, y, 4, 0, 2 * Math.PI);
+  ctx.fillStyle = "black";
+  ctx.fill();
   ctx.beginPath();
   ctx.arc(x, y, 3, 0, 2 * Math.PI);
   ctx.fillStyle = color;
@@ -70,22 +59,25 @@ function drawDot() {
   document.getElementById("a").value = "";
   document.getElementById("b").value = "";
   document.getElementById("c").value = "";
-  
 }
 
+window.onload = function() {
+  drawChart();
+}
 </script>
 
-</head>
+<title>Ternary Plotter</title>
+<h1>Ternary Plotter</h1>
 
-<body>
+</head><body>
 
 <label for="charts">Choose a chart:</label>
-
 <select id="charts" onchange="drawChart()">
   <option value="0">Blank</option>
   <option value="1">Soil</option>
   <option value="2">Igneous</option>
-</select> <b>Caution, changing chart will clear points!</b>
+</select> <b>&nbsp;Caution, changing chart will clear points!</b>
+
 <br>
 <br>
 
@@ -95,6 +87,7 @@ function drawDot() {
 <input type="number" id="b" name="b" step="0.01" style="width:5em;" min="0">
 <label for="c" id="c_name">Right:</label>
 <input type="number" id="c" name="c" step="0.01" style="width:5em;" min="0">
+
 <label for="color">Color:</label>
 <select id="color">
   <option value="Red">Red</option>
@@ -105,20 +98,13 @@ function drawDot() {
   <option value="Purple">Purple</option>
   <option value="Black">Black</option>
 </select>
+
 <button onclick="drawDot()">Add Point</button>
 
 <br>
 <br>
 
-<canvas id="myCanvas" width="0" height="0" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.
-</canvas>
-
-<script>
-window.onload = function() {
-  drawChart();
-}
-</script>
+<canvas id="myCanvas" width="0" height="0" style="border:1px solid #d3d3d3;">Your browser does not support the HTML5 canvas tag.</canvas>
 
 </body>
 </html>
